@@ -1,112 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auth0 Example</title>
-  <style>
-    /* Estilos generales */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    /* Navegación */
-    nav {
-      background-color: #333;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 15px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      color: #ffd700;
-    }
-
-    /* Contenedor principal */
-    .container {
-      max-width: 900px;
-      margin: 50px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    p a {
-      display: inline-block;
-      padding: 10px 20px;
-      margin-top: 15px;
-      text-decoration: none;
-      color: white;
-      background-color: #333;
-      border-radius: 5px;
-    }
-
-    p a:hover {
-      background-color: #555;
-    }
-
-    pre {
-      background-color: #f0f0f0;
-      padding: 15px;
-      text-align: left;
-      overflow-x: auto;
-      border-radius: 5px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px 0;
-      background-color: #333;
-      color: white;
-      margin-top: 30px;
-    }
-  </style>
+    <title>Auth0 Laboratorio 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">Auth0 Laboratorio 3</a>
+            <div class="navbar-nav ms-auto">
+                {% if session %}
+                    <a class="nav-link" href="/profile">Mi Perfil</a>
+                    <a class="nav-link" href="/logout" id="qsLogoutBtn">Cerrar Sesión</a>
+                {% else %}
+                    <a class="nav-link" href="/login" id="qsLoginBtn">Iniciar Sesión</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
 
-  <nav>
-    <div><strong>Auth0 Laboratorio 3</strong></div>
-    <div>
-      {% if session %}
-        <a href="/logout" id="qsLogoutBtn">Logout</a>
-      {% else %}
-        <a href="/login" id="qsLoginBtn">Login</a>
-      {% endif %}
+    <div class="container mt-5">
+        {% if session %}
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Bienvenido, {{session.userinfo.name}}!</h2>
+                            <div class="mt-4">
+                                <a href="/profile" class="btn btn-primary">Editar mi perfil</a>
+                                <a href="/logout" id="qsLogoutBtn" class="btn btn-outline-danger">Cerrar Sesión</a>
+                            </div>
+                            <hr>
+                            <pre class="bg-light p-3 rounded mt-3">{{pretty}}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2>¡Bienvenido!</h2>
+                    <p class="lead">Por favor, inicia sesión para acceder a tu perfil.</p>
+                    <a href="/login" id="qsLoginBtn" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </nav>
 
-  <div class="container">
-    {% if session %}
-      <h1>Bienv, {{session.userinfo.name}}!</h1>
-      <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
-      <div><pre>{{pretty}}</pre></div>
-    {% else %}
-      <h1>Welcome, Guest!</h1>
-      <p><a href="/login" id="qsLoginBtn">Login</a></p>
-    {% endif %}
-  </div>
+    <footer class="container text-center mt-5">
+        <p class="text-muted">© 2024 Auth0 Laboratorio 3. All Rights Reserved.</p>
+    </footer>
 
-  <footer>
-    © 2024 Auth0 Laboratorio 3. All Rights Reserved.
-  </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+Last edited just now

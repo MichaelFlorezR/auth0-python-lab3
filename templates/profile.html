@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil - Auth0 Laboratorio 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">Auth0 Laboratorio 3</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/logout" id="qsLogoutBtn">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Modificar Datos Personales</h2>
+
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="doc_type" class="form-label">Tipo de Documento</label>
+                                <select class="form-select" id="doc_type" name="doc_type" required>
+                                    <option value="" {% if not metadata.doc_type %}selected{% endif %}>Seleccione...</option>
+                                    <option value="CC" {% if metadata.doc_type == 'CC' %}selected{% endif %}>Cédula de Ciudadanía</option>
+                                    <option value="CE" {% if metadata.doc_type == 'CE' %}selected{% endif %}>Cédula de Extranjería</option>
+                                    <option value="PA" {% if metadata.doc_type == 'PA' %}selected{% endif %}>Pasaporte</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="doc_number" class="form-label">Número de Documento</label>
+                                <input type="text" class="form-control" id="doc_number" name="doc_number" 
+                                       value="{{ metadata.doc_number or '' }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="address" name="address" 
+                                       value="{{ metadata.address or '' }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" 
+                                       value="{{ metadata.phone or '' }}" required>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                <a href="/" class="btn btn-secondary">Volver</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
